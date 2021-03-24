@@ -52,7 +52,7 @@ Now we can use p variable to pass in other functions.
 
 ## Some points to remember
 - The purpose of this module was not to validate Query params.
-- You can use [Go Playground Validator] (https://github.com/go-playground/validator) for validating Query Params. 
+- You can use [Go Playground Validator](https://github.com/go-playground/validator) for validating Query Params. 
 - Always use p.Search in database searching, and p.Q in templates. 
 - p.Search encapsulated query with '%' and p.Q is raw text searched by user. p.Search also filters with regex.
 - All extra filters are also sanitized with regex, but you have to put other conditions in custom code or may be build a wrapper or something.

@@ -7,47 +7,55 @@ For creating a pagination object, that will be passed around in functions, rathe
 ## Installation
 - Import it in your code
 ```go 
-	import "github.com/saketsharma0805/gopaginator"
+import "github.com/saketsharma0805/gopaginator"
 ```
 
 ## Quick start
 Suppose GetUsers is a function which will return list of users, and we need pagination
 ```go
-  func GetUsers (ctx *context.Context, db *sql.DB, p *gopaginator.Paginator) []*Users {
-    stmt := fmt.Sprintf("SELECT id, name, email, is_active, created_at 
-      from tbl_users
-      where 1 and (name like ? or email like ?) and is_active = ?
-      order by %s %s 
-      limit %d offset %d", 
-      p.OrderBy, p.Order, p.Limit, p.Offset,
-    )
+
+func GetUsers (ctx *context.Context, db *sql.DB, p *gopaginator.Paginator) []*Users {
+  stmt := fmt.Sprintf("SELECT id, name, email, is_active, created_at 
+    from tbl_users
+    where 1 and (name like ? or email like ?) and is_active = ?
+    order by %s %s 
+    limit %d offset %d", 
+    p.OrderBy, p.Order, p.Limit, p.Offset,
+  )
     
-    rows, err := db.QueryContext(ctx,stmt, p.Search, p.Search, p.Filter["is_active"])
-    ... 
-  }
+  rows, err := db.QueryContext(ctx,stmt, p.Search, p.Search, p.Filter["is_active"])
+  ... 
+ }
+  
 ```
 
 Pass http request and list of extra filters to Paginator constructor
 ```go
+  
   p := gopaginator.NewPaginator(r, []string{"is_active"})
   p.ParseRequest()
+  
 ```
 
 Now we can use p variable to pass in other functions.
 ```go
+  
   users := GetUsers(ctx, db, p)
+  
 ```
 
 ## Create custom Paginator object with keys
 
 ```go
+
   p := gopaginator.NewPaginator(r, []string{"is_active"})
-	p.SetLimit("l", 10).
-		SetPage("p", 1).
-		SetOrderBy("oby", "email").
-		SetOrdering("o", "asc").
-		SetQ("query", "").
-		ParseRequest()
+  p.SetLimit("l", 10).
+    SetPage("p", 1).
+    SetOrderBy("oby", "email").
+    SetOrdering("o", "asc").
+    SetQ("query", "").
+    ParseRequest()
+    
 ```
 
 ## Todo List

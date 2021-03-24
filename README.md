@@ -25,9 +25,7 @@ Suppose GetUsers is a function which will return list of users, and we need pagi
   }
 ```
 
-first parameter: here r is of type *http.Request
-second parameter: []string{} is for the list of extra filters, other than (limit, page, q). In this example, it is "is_active"
-
+Pass http request and list of extra filters to Paginator constructor
 ``` 
   p := gopaginator.NewPaginator(r, []string{"is_active"})
   p.ParseRequest()
@@ -36,6 +34,18 @@ second parameter: []string{} is for the list of extra filters, other than (limit
 Now we can use p variable to pass in other functions.
 ```
   users := GetUsers(ctx, db, p)
+```
+
+## Create custom Paginator object with keys
+
+```
+  p := gopaginator.NewPaginator(r, []string{"is_active"})
+	p.SetLimit("l", 10).
+		SetPage("p", 1).
+		SetOrderBy("oby", "email").
+		SetOrdering("o", "asc").
+		SetQ("query", "").
+		ParseRequest()
 ```
 
 ## Todo List

@@ -6,11 +6,13 @@ For creating a pagination object, that will be passed around in functions, rathe
 
 ## Installation
 - Import it in your code
-``` import "github.com/saketsharma0805/gopaginator"```
+```go 
+	import "github.com/saketsharma0805/gopaginator"
+```
 
 ## Quick start
 Suppose GetUsers is a function which will return list of users, and we need pagination
-```
+```go
   func GetUsers (ctx *context.Context, db *sql.DB, p *gopaginator.Paginator) []*Users {
     stmt := fmt.Sprintf("SELECT id, name, email, is_active, created_at 
       from tbl_users
@@ -26,19 +28,19 @@ Suppose GetUsers is a function which will return list of users, and we need pagi
 ```
 
 Pass http request and list of extra filters to Paginator constructor
-``` 
+```go
   p := gopaginator.NewPaginator(r, []string{"is_active"})
   p.ParseRequest()
 ```
 
 Now we can use p variable to pass in other functions.
-```
+```go
   users := GetUsers(ctx, db, p)
 ```
 
 ## Create custom Paginator object with keys
 
-```
+```go
   p := gopaginator.NewPaginator(r, []string{"is_active"})
 	p.SetLimit("l", 10).
 		SetPage("p", 1).
